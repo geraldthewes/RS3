@@ -223,10 +223,11 @@ LIBS3_SOURCES := acl.c bucket.c error_parser.c general.c \
                  response_headers_handler.c service_access_logging.c \
                  service.c simplexml.c util.c
 
+#$(VERBOSE_SHOW) gcc -shared -Wl,-soname,libs3.so.$(LIBS3_VER_MAJOR)
 $(LIBS3_SHARED): $(LIBS3_SOURCES:%.c=$(BUILD)/obj/%.do)
 	$(QUIET_ECHO) $@: Building shared library
 	@ mkdir -p $(dir $@)
-	$(VERBOSE_SHOW) gcc -shared -Wl,-soname,libs3.so.$(LIBS3_VER_MAJOR) \
+	$(VERBOSE_SHOW) gcc -shared -Wl,-install_name,libs3.so.$(LIBS3_VER_MAJOR) \
         -o $@ $^ $(LDFLAGS)
 
 $(LIBS3_STATIC): $(LIBS3_SOURCES:%.c=$(BUILD)/obj/%.o)
